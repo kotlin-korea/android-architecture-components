@@ -22,6 +22,7 @@ import android.arch.persistence.room.Room
 import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
+import com.example.android.persistence.db.AppDatabase.Companion.DATABASE_NAME
 
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -29,7 +30,6 @@ import io.reactivex.Flowable
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
 
-import com.example.android.persistence.db.AppDatabase.DATABASE_NAME
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 /**
@@ -55,7 +55,6 @@ class DatabaseCreator {
      * Although this uses an AsyncTask which currently uses a serial executor, it's thread-safe.
      */
     fun createDb(context: Context) {
-
         Log.d("DatabaseCreator", "Creating DB from " + Thread.currentThread().name)
 
         if (!mInitializing.compareAndSet(true, false)) {
