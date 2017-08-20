@@ -32,7 +32,7 @@ import java.util.Date
                 onDelete = ForeignKey.CASCADE)),
         indices = arrayOf(Index(value = "productId")))
 data class CommentEntity(@PrimaryKey(autoGenerate = true)
-                    override var id: Int = 0,
-                    override var productId: Int = 0,
-                    override var text: String? = null,
-                    override var postedAt: Date? = null) : Comment
+                    override var id: Int,
+                    override var productId: Int,
+                    override var text: String?,
+                    override var postedAt: Date?) : Comment

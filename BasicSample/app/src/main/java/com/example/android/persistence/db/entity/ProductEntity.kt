@@ -23,7 +23,7 @@ import com.example.android.persistence.model.Product
 
 @Entity(tableName = "products")
 data class ProductEntity(@PrimaryKey
-                         override var id: Int = 0,
-                         override var name: String? = null,
-                         override var description: String? = null,
-                         override var price: Int = 0) : Product
+                         override var id: Int,
+                         override var name: String?,
+                         override var description: String?,
+                         override var price: Int) : Product

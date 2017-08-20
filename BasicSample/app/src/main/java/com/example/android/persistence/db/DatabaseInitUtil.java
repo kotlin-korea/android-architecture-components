@@ -53,11 +53,12 @@ class DatabaseInitUtil {
         Random rnd = new Random();
         for (int i = 0; i < FIRST.length; i++) {
             for (int j = 0; j < SECOND.length; j++) {
-                ProductEntity product = new ProductEntity();
-                product.setName(FIRST[i] + " " + SECOND[j]);
-                product.setDescription(product.getName() + " " + DESCRIPTION[j]);
-                product.setPrice(rnd.nextInt(240));
-                product.setId(FIRST.length * i + j + 1);
+
+                int id = FIRST.length * i + j + 1;
+                String name = FIRST[i] + " " + SECOND[j];
+                String description = name  + FIRST.length * i + j + 1;
+                int price = FIRST.length * i + j + 1;
+                ProductEntity product = new ProductEntity(id, name, description, price);
                 products.add(product);
             }
         }
@@ -65,11 +66,9 @@ class DatabaseInitUtil {
         for (Product product : products) {
             int commentsNumber = rnd.nextInt(5) + 1;
             for (int i = 0; i < commentsNumber; i++) {
-                CommentEntity comment = new CommentEntity();
-                comment.setProductId(product.getId());
-                comment.setText(COMMENTS[i] + " for " + product.getName());
-                comment.setPostedAt(new Date(System.currentTimeMillis()
-                        - TimeUnit.DAYS.toMillis(commentsNumber - i) + TimeUnit.HOURS.toMillis(i)));
+                CommentEntity comment = new CommentEntity(0, product.getId(),COMMENTS[i] + " for " + product.getName(),
+                        new Date(System.currentTimeMillis()
+                                - TimeUnit.DAYS.toMillis(commentsNumber - i) + TimeUnit.HOURS.toMillis(i)));
                 comments.add(comment);
             }
         }
