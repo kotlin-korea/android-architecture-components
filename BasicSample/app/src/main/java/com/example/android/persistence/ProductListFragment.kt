@@ -26,24 +26,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.android.persistence.databinding.ListFragmentBinding
+import com.example.android.persistence.model.Product
 import com.example.android.persistence.ui.ProductAdapter
 import com.example.android.persistence.ui.ProductClickCallback
 import com.example.android.persistence.viewmodel.ProductListViewModel
 
 class ProductListFragment : LifecycleFragment() {
 
-    private var mProductAdapter: ProductAdapter? = null
+    private val mProductAdapter by lazy { ProductAdapter(mProductClickCallback) }
 
-    private var mBinding: ListFragmentBinding? = null
+    private lateinit var mBinding: ListFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         mBinding = DataBindingUtil.inflate(inflater!!, R.layout.list_fragment, container, false)
 
-        mProductAdapter = ProductAdapter(mProductClickCallback)
-        mBinding!!.productsList.adapter = mProductAdapter
+        mBinding.productsList.adapter = mProductAdapter
 
-        return mBinding!!.root
+        return mBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -56,18 +56,18 @@ class ProductListFragment : LifecycleFragment() {
     private fun subscribeUi(viewModel: ProductListViewModel) {
         // Update the list when the data changes
         viewModel.products.observe(this, Observer { myProducts ->
-            if (myProducts != null) {
-                mBinding!!.isLoading = false
-                mProductAdapter!!.setProductList(myProducts)
-            } else {
-                mBinding!!.isLoading = true
-            }
+            myProducts?.let {
+                mBinding.isLoading = false
+                mProductAdapter.setProductList(it)
+            } ?: let { mBinding.isLoading = true }
         })
     }
 
-    private val mProductClickCallback = ProductClickCallback { product ->
-        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-            (activity as MainActivity).show(product)
+    private val mProductClickCallback = object : ProductClickCallback {
+        override fun onClick(product: Product) {
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                (activity as MainActivity).show(product)
+            }
         }
     }
 

@@ -25,6 +25,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.android.persistence.databinding.ProductFragmentBinding
+import com.example.android.persistence.model.Comment
 import com.example.android.persistence.ui.CommentAdapter
 import com.example.android.persistence.ui.CommentClickCallback
 import com.example.android.persistence.viewmodel.ProductViewModel
@@ -45,7 +46,8 @@ class ProductFragment : LifecycleFragment() {
         return mBinding.root
     }
 
-    private val mCommentClickCallback = CommentClickCallback {
+    private val mCommentClickCallback = object : CommentClickCallback {
+        override fun onClick(comment: Comment) {}
         // no-op
     }
 
