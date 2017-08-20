@@ -27,6 +27,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.v4.app.Fragment;
 
 import com.example.android.persistence.db.entity.ProductEntity;
+import com.example.android.persistence.viewmodel.ProductListViewModel;
 
 import org.junit.Before;
 import org.junit.Rule;
