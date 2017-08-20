@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.example.android.persistence.model;
+package com.example.android.persistence.model
 
-public interface Product {
-    int getId();
-    String getName();
-    String getDescription();
-    int getPrice();
+interface Product {
+    val id: Int
+    val name: String
+    val description: String
+    val price: Int
 }

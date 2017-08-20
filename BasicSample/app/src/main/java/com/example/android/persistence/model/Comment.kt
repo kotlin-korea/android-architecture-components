@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.example.android.persistence.model;
+package com.example.android.persistence.model
 
-import java.util.Date;
+import java.util.Date
 
-public interface Comment {
-    int getId();
-    int getProductId();
-    String getText();
-    Date getPostedAt();
+interface Comment {
+    val id: Int
+    val productId: Int
+    val text: String
+    val postedAt: Date
 }
