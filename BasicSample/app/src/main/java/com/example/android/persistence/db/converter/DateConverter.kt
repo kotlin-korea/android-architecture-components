@@ -14,20 +14,19 @@
  * limitations under the License.
  */
 
-package com.example.android.persistence.db.converter;
+package com.example.android.persistence.db.converter
 
-import android.arch.persistence.room.TypeConverter;
+import android.arch.persistence.room.TypeConverter
 
-import java.util.Date;
+import java.util.Date
 
-public class DateConverter {
+object DateConverter {
+
+    @JvmStatic
     @TypeConverter
-    public static Date toDate(Long timestamp) {
-        return timestamp == null ? null : new Date(timestamp);
-    }
+    fun toDate(timestamp: Long?): Date? = timestamp?.let { Date(it) }
 
+    @JvmStatic
     @TypeConverter
-    public static Long toTimestamp(Date date) {
-        return date == null ? null : date.getTime();
-    }
+    fun toTimestamp(date: Date?): Long? = date?.time
 }
