@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package com.example.android.persistence.ui;
+package com.example.android.persistence.ui
 
-import android.databinding.BindingAdapter;
-import android.view.View;
+import android.databinding.BindingAdapter
+import android.view.View
 
 
-public class BindingAdapters {
+object BindingAdapters {
+    @JvmStatic
     @BindingAdapter("visibleGone")
-    public static void showHide(View view, boolean show) {
-        view.setVisibility(show ? View.VISIBLE : View.GONE);
+    fun showHide(view: View, show: Boolean) {
+        view.visibility = if (show) View.VISIBLE else View.GONE
     }
 }
