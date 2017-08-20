@@ -31,9 +31,9 @@ import com.example.android.persistence.viewmodel.ProductViewModel
 
 class ProductFragment : LifecycleFragment() {
 
-    private var mBinding: ProductFragmentBinding? = null
+    private lateinit var mBinding: ProductFragmentBinding
 
-    private var mCommentAdapter: CommentAdapter? = null
+    private val mCommentAdapter by lazy { CommentAdapter(mCommentClickCallback) }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -41,9 +41,8 @@ class ProductFragment : LifecycleFragment() {
         mBinding = DataBindingUtil.inflate(inflater!!, R.layout.product_fragment, container, false)
 
         // Create and set the adapter for the RecyclerView.
-        mCommentAdapter = CommentAdapter(mCommentClickCallback)
-        mBinding!!.commentList.adapter = mCommentAdapter
-        return mBinding!!.root
+        mBinding.commentList.adapter = mCommentAdapter
+        return mBinding.root
     }
 
     private val mCommentClickCallback = CommentClickCallback {
@@ -55,12 +54,11 @@ class ProductFragment : LifecycleFragment() {
         val factory = ProductViewModel.Factory(
                 activity.application, arguments.getInt(KEY_PRODUCT_ID))
 
-        val model = ViewModelProviders.of(this, factory)
-                .get(ProductViewModel::class.java)
+        ViewModelProviders.of(this, factory).get(ProductViewModel::class.java).let {
+            mBinding.productViewModel = it
 
-        mBinding!!.productViewModel = model
-
-        subscribeToModel(model)
+            subscribeToModel(it)
+        }
     }
 
     private fun subscribeToModel(model: ProductViewModel) {
@@ -70,12 +68,10 @@ class ProductFragment : LifecycleFragment() {
 
         // Observe comments
         model.comments.observe(this, Observer { commentEntities ->
-            if (commentEntities != null) {
-                mBinding!!.isLoading = false
-                mCommentAdapter!!.setCommentList(commentEntities)
-            } else {
-                mBinding!!.isLoading = true
-            }
+            commentEntities?.let {
+                mBinding.isLoading = false
+                mCommentAdapter.setCommentList(it)
+            } ?: let { mBinding.isLoading = true }
         })
     }
 
@@ -84,12 +80,11 @@ class ProductFragment : LifecycleFragment() {
         private val KEY_PRODUCT_ID = "product_id"
 
         /** Creates product fragment for specific product ID  */
-        fun forProduct(productId: Int): ProductFragment {
-            val fragment = ProductFragment()
-            val args = Bundle()
-            args.putInt(KEY_PRODUCT_ID, productId)
-            fragment.arguments = args
-            return fragment
-        }
+        fun forProduct(productId: Int): ProductFragment =
+                ProductFragment().apply {
+                    arguments = Bundle().apply {
+                        putInt(KEY_PRODUCT_ID, productId)
+                    }
+                }
     }
 }
