@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-package com.example.android.persistence.model
+package com.example.android.persistence.db.entity
 
-interface Product {
-    val id: Int
-    val name: String?
-    val description: String?
-    val price: Int
-}
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+
+import com.example.android.persistence.model.Product
+
+@Entity(tableName = "products")
+data class ProductEntity(@PrimaryKey
+                         override var id: Int = 0,
+                         override var name: String? = null,
+                         override var description: String? = null,
+                         override var price: Int = 0) : Product
