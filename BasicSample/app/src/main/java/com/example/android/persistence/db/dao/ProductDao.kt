@@ -14,29 +14,27 @@
  * limitations under the License.
  */
 
-package com.example.android.persistence.db.dao;
+package com.example.android.persistence.db.dao
 
-import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
-import android.arch.persistence.room.Query;
+import android.arch.lifecycle.LiveData
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Insert
+import android.arch.persistence.room.OnConflictStrategy
+import android.arch.persistence.room.Query
 
-import com.example.android.persistence.db.entity.ProductEntity;
-
-import java.util.List;
+import com.example.android.persistence.db.entity.ProductEntity
 
 @Dao
-public interface ProductDao {
+interface ProductDao {
     @Query("SELECT * FROM products")
-    LiveData<List<ProductEntity>> loadAllProducts();
+    fun loadAllProducts(): LiveData<List<ProductEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<ProductEntity> products);
+    fun insertAll(products: List<ProductEntity>)
 
     @Query("select * from products where id = :productId")
-    LiveData<ProductEntity> loadProduct(int productId);
+    fun loadProduct(productId: Int): LiveData<ProductEntity>
 
     @Query("select * from products where id = :productId")
-    ProductEntity loadProductSync(int productId);
+    fun loadProductSync(productId: Int): ProductEntity
 }
