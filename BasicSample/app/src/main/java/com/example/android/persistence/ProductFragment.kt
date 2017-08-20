@@ -80,11 +80,10 @@ class ProductFragment : LifecycleFragment() {
         private val KEY_PRODUCT_ID = "product_id"
 
         /** Creates product fragment for specific product ID  */
-        fun forProduct(productId: Int): ProductFragment =
-                ProductFragment().apply {
-                    arguments = Bundle().apply {
-                        putInt(KEY_PRODUCT_ID, productId)
-                    }
-                }
+        fun forProduct(productId: Int): ProductFragment {
+            val args = Bundle()
+            args.putInt(KEY_PRODUCT_ID, productId)
+            return ProductFragment().apply { arguments = args }
+        }
     }
 }
