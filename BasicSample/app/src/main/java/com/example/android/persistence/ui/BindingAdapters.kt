@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-package com.example.android.persistence.model;
+package com.example.android.persistence.ui
 
-public interface Product {
-    int getId();
-    String getName();
-    String getDescription();
-    int getPrice();
+import android.databinding.BindingAdapter
+import android.view.View
+
+
+object BindingAdapters {
+    @JvmStatic
+    @BindingAdapter("visibleGone")
+    fun showHide(view: View, show: Boolean) {
+        view.visibility = if (show) View.VISIBLE else View.GONE
+    }
 }

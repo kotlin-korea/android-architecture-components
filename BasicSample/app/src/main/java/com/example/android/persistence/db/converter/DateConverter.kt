@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-package com.example.android.persistence.ui;
+package com.example.android.persistence.db.converter
 
-import android.databinding.BindingAdapter;
-import android.view.View;
+import android.arch.persistence.room.TypeConverter
 
+import java.util.Date
 
-public class BindingAdapters {
-    @BindingAdapter("visibleGone")
-    public static void showHide(View view, boolean show) {
-        view.setVisibility(show ? View.VISIBLE : View.GONE);
-    }
+object DateConverter {
+
+    @JvmStatic
+    @TypeConverter
+    fun toDate(timestamp: Long?): Date? = timestamp?.let { Date(it) }
+
+    @JvmStatic
+    @TypeConverter
+    fun toTimestamp(date: Date?): Long? = date?.time
 }

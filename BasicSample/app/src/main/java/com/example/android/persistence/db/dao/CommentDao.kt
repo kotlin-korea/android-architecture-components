@@ -14,27 +14,25 @@
  * limitations under the License.
  */
 
-package com.example.android.persistence.db.dao;
+package com.example.android.persistence.db.dao
 
 
-import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
-import android.arch.persistence.room.Query;
+import android.arch.lifecycle.LiveData
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Insert
+import android.arch.persistence.room.OnConflictStrategy
+import android.arch.persistence.room.Query
 
-import com.example.android.persistence.db.entity.CommentEntity;
-
-import java.util.List;
+import com.example.android.persistence.db.entity.CommentEntity
 
 @Dao
-public interface CommentDao {
+interface CommentDao {
     @Query("SELECT * FROM comments where productId = :productId")
-    LiveData<List<CommentEntity>> loadComments(int productId);
+    fun loadComments(productId: Int): LiveData<List<CommentEntity>>
 
     @Query("SELECT * FROM comments where productId = :productId")
-    List<CommentEntity> loadCommentsSync(int productId);
+    fun loadCommentsSync(productId: Int): List<CommentEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<CommentEntity> products);
+    fun insertAll(products: List<CommentEntity>)
 }

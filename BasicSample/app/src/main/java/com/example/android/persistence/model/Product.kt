@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.example.android.persistence.ui;
+package com.example.android.persistence.model
 
-import com.example.android.persistence.model.Comment;
-
-public interface CommentClickCallback {
-    void onClick(Comment comment);
+interface Product {
+    val id: Int
+    val name: String?
+    val description: String?
+    val price: Int
 }

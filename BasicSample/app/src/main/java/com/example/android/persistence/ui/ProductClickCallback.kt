@@ -14,20 +14,10 @@
  * limitations under the License.
  */
 
-package com.example.android.persistence.db.converter;
+package com.example.android.persistence.ui
 
-import android.arch.persistence.room.TypeConverter;
+import com.example.android.persistence.model.Product
 
-import java.util.Date;
-
-public class DateConverter {
-    @TypeConverter
-    public static Date toDate(Long timestamp) {
-        return timestamp == null ? null : new Date(timestamp);
-    }
-
-    @TypeConverter
-    public static Long toTimestamp(Date date) {
-        return date == null ? null : date.getTime();
-    }
+interface ProductClickCallback {
+    fun onClick(product: Product)
 }

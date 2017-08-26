@@ -15,6 +15,8 @@
  */
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 25
@@ -54,7 +56,11 @@ dependencies {
     compile 'android.arch.lifecycle:extensions:' + rootProject.archLifecycleVersion;
     compile 'android.arch.persistence.room:runtime:' + rootProject.archRoomVersion;
     annotationProcessor "android.arch.lifecycle:compiler:" + rootProject.archLifecycleVersion;
-    annotationProcessor "android.arch.persistence.room:compiler:" + rootProject.archRoomVersion;
+    kapt "android.arch.persistence.room:compiler:" + rootProject.archRoomVersion
+
+    kapt 'com.android.databinding:compiler:3.0.0-beta2'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.2'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
     testCompile 'junit:junit:4.12'
 
@@ -72,5 +78,9 @@ dependencies {
     // Force usage of dependencies in the test app, since it is internally used by the runner module.
     androidTestCompile 'com.android.support:support-annotations:' + rootProject.supportLibVersion;
     androidTestCompile 'com.android.support:support-v4:' + rootProject.supportLibVersion;
-    androidTestCompile 'com.android.support:recyclerview-v7:' + rootProject.supportLibVersion;
+    androidTestCompile 'com.android.support:recyclerview-v7:' + rootProject.supportLibVersion
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version";
+}
+repositories {
+    mavenCentral()
 }
