@@ -37,17 +37,13 @@ class ProductAdapter(private val mProductClickCallback: ProductClickCallback?) :
             notifyItemRangeInserted(0, productList.size)
         } else {
             val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-                override fun getOldListSize(): Int {
-                    return mProductList!!.size
-                }
 
-                override fun getNewListSize(): Int {
-                    return productList.size
-                }
+                override fun getOldListSize() = mProductList!!.size
 
-                override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                    return mProductList!![oldItemPosition].id == productList[newItemPosition].id
-                }
+                override fun getNewListSize() = productList.size
+
+                override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+                        mProductList!![oldItemPosition].id == productList[newItemPosition].id
 
                 override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
                     val product = productList[newItemPosition]
@@ -76,9 +72,7 @@ class ProductAdapter(private val mProductClickCallback: ProductClickCallback?) :
         holder.binding.executePendingBindings()
     }
 
-    override fun getItemCount(): Int {
-        return if (mProductList == null) 0 else mProductList!!.size
-    }
+    override fun getItemCount() = mProductList?.size ?: 0
 
     inner class ProductViewHolder(val binding: ProductItemBinding) : RecyclerView.ViewHolder(binding.root)
 }
