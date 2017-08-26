@@ -37,13 +37,10 @@ class CommentAdapter(private val mCommentClickCallback: CommentClickCallback?) :
             notifyItemRangeInserted(0, comments.size)
         } else {
             val diffResult = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-                override fun getOldListSize(): Int {
-                    return mCommentList!!.size
-                }
 
-                override fun getNewListSize(): Int {
-                    return comments.size
-                }
+                override fun getOldListSize() = mCommentList!!.size
+
+                override fun getNewListSize() = comments.size
 
                 override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
                     val old = mCommentList!![oldItemPosition]
@@ -78,9 +75,7 @@ class CommentAdapter(private val mCommentClickCallback: CommentClickCallback?) :
         holder.binding.executePendingBindings()
     }
 
-    override fun getItemCount(): Int {
-        return if (mCommentList == null) 0 else mCommentList!!.size
-    }
+    override fun getItemCount() = mCommentList?.size ?: 0
 
     inner class CommentViewHolder(val binding: CommentItemBinding) : RecyclerView.ViewHolder(binding.root)
 }
